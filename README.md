@@ -8,7 +8,8 @@ My Steps on setting up a cloud environment involving many services.
 
 - Set up Billing Alerts for anything over a few dollars in CloudWatch.
 
-- Configure the AWS CLI for your user. Used 'aws configure' in Linux terminal to set it up.
+- Configure the AWS CLI for your user. 
+    - Used 'aws configure' in Linux terminal to set it up.
 
 2. Web Hosting Basics:
 
