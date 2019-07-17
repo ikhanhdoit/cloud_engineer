@@ -20,6 +20,7 @@ My Steps on setting up a cloud environment involving many services.
     - ** Had issues connecting to private subnet via SSH through the NAT gateway in the public subnet since we cannot get to the private subnet directly without the keypair and the private subnet is not accessible from the internet. **
         - Solved by saving keypair on NAT instance and then SSH to the private subnet from the NAT instance from the public subnet.
         - Without doing it this way, we cannot connect to instance on private subnet. We get this error "Permission denied (publickey,gssapi-keyex,gssapi-with-mic)."
+            Other option is to configure the ssh-agent forwarding with something like PuTTY.
     - ** NACL, Route Tables, and Security Groups can be configured to be more narrow to your infrastructure and IP Addresses instead of 0.0.0.0/0 ALL ports. **
 
 - Take a snapshot of your VM, delete the VM, and deploy a new one from the snapshot. Basically disk backup + disk restore.
