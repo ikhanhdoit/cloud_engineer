@@ -10,10 +10,14 @@ My Steps on setting up a cloud environment involving many services.
 
 - Configure the AWS CLI for your user. 
     - Used 'aws configure' in Linux terminal to set it up.
+    - The AWS Access Key ID and AWS Secret Access Key is needed. It can be found on IAM user Security Credentials.
 
 2. Web Hosting Basics:
 
 - Deploy a EC2 Virtual Machine and host a simple static "Fortune-of-the-Day Coming Soon" web page.
+    - Used Amazon Linux 2 AMI and t2.micro
+    - Also created and/or set up VPC, Public/Private Subnets, associated Route Table, created/attached Internet Gateway, attached Elastic IP, NAT Gateway, Security Groups, NACL.
+    ** Had issues connecting to private subnet via SSH through the NAT 
 
 - Take a snapshot of your VM, delete the VM, and deploy a new one from the snapshot. Basically disk backup + disk restore.
 
