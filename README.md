@@ -35,16 +35,35 @@
     - Can create snapshot of EBS volume and AMI image of instance to create backup
     - Snapshots are incremental and useful for backups when done often or before major updates. EBS Snapshots are better for backups than AMIs because of scalability and consistency.
     - AMIs can be useful for instance replication and also backups. AMI does not scale well with large volumes.
-    - My solution is to make EBS Snapshots and create/attach them to EC2 instances instead of creating AMI instances.
+    - Best solution is to make EBS Snapshots and create/attach them to EC2 instances instead of creating AMI instances.
         - You can do this by reassigning the EBS Volume to the root volume, either sda or xvda.
         - Instances need to be stopped for root volumes to be detached.
+    - For the purpose of this project, I will just create an AMI of the VM.
 
 - Checkpoint: You can view a simple HTML page served from your EC2 instance. Elastic IP can be used as well.
 
 ## 3. Auto Scaling
 
-- Create an AMI from that VM and put it in an autoscaling group so one VM always exists.
-
 - Put a Elastic Load Balancer infront of that VM and load balance between two Availability Zones (one EC2 in each AZ).
+    - Application Load Balancer was created with a target group.
+
+- Create an AMI from that VM and put it in an autoscaling group so one VM always exists.
+    - A Launch Configuration must be done with include the AMI. 
+        - An important note is to choose "Assign a public IP address to every instance"
+    - For Auto Scaling Group, choose the Launch Configuration you just created.
+    - Choose your group size and click on "Advanced" in order to choose Load Balancer.
+    - Then choose "Keep this group at its initial size" for the group size. You can use scaling policies if you plan to scale your application up and down.
+        - For now we will use the ASG to ensure 1 instance is running at all times.
 
 - Checkpoint: You can view a simple HTML page served from both of your EC2 instances. You can turn one off and your website is still accessible.
+    - You can test your Auto Scaling Group by terminating the instance and see if another instance creates itself.
+    - Be aware of EBS volumes if you didn't set it to delete on termination. This could rack up unncessary costs.
+    - Auto Scaling Group may take some time before automatically creating a new instance due to health check timers.
+
+## 4. External Data
+
+- Create a DynamoDB table and experiment with loading and retrieving data manually, then do the same via a script on your local machine.
+
+- Refactor your static page into your Fortune-of-the-Day website (Node, PHP, Python, whatever) which reads/updates a list of fortunes in the AWS DynamoDB table. (Hint: EC2 Instance Role)
+
+- Checkpoint: Your HA/AutoScaled website can now load/save data to a database between users and sessions
