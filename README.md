@@ -22,9 +22,9 @@
             - Without doing it this way, we cannot connect to instance on private subnet. We get this error "Permission denied (publickey,gssapi-keyex,gssapi-with-mic)."
         - Above solution was not the most secure. 
         - Another way to fix is to use 'ssh-keygen' in public subnet and NAT and then SSH into the private subnet.
-            - Then vim into /etc/ssh/sshd_config file to change PasswordAuthentication to "yes" and sudo 'service sshd restart'.
+            - Then vim into /etc/ssh/sshd_config file to change PasswordAuthentication to "yes" and 'sudo service sshd restart'.
             - Then set up 'sudo passwd ec2-user' to create the password and logout to the public subnet.
-            - Next is to 'ssh-copy-id ec2-user@<ip address of subnet>' and enter password. Now you can SSH into the private subnet without a Key Pair. This eliminates having a key pair in your public subnet.
+            - Next is to 'ssh-copy-id ec2-user@<ip address of subnet>' in the public subnet and enter the password. Now you can SSH into the private subnet without a Key Pair. This eliminates having a key pair in your public subnet.
         - Other option is to configure the ssh-agent forwarding with something like PuTTY.
     - Created website using Apache by using "sudo yum install -y httpd" and start it by using "sudo service httpd start"
     - Used "sudo chkconfig httpd on" to make sure the web server starts at each system boot.
