@@ -25,6 +25,8 @@
             - Then vim into /etc/ssh/sshd_config file to change PasswordAuthentication to "yes" and 'sudo service sshd restart'.
             - Then set up 'sudo passwd ec2-user' to create the password and logout to the public subnet.
             - Next is to 'ssh-copy-id ec2-user@<ip address of subnet>' in the public subnet and enter the password. Now you can SSH into the private subnet without a Key Pair. This eliminates having a key pair in your public subnet.
+            ** _When creating a new instance, the default setting makes PasswordAuthentication "no." Go to '/etc/cloud/cloud.cfg' and change "ssh_pwauth" to "true"
+            - This could also all be done with a script in user-data upon launch.
         - Other option is to configure the ssh-agent forwarding with something like PuTTY.
     - Created website using Apache by using "sudo yum install -y httpd" and start it by using "sudo service httpd start"
     - Used "sudo chkconfig httpd on" to make sure the web server starts at each system boot.
@@ -62,7 +64,13 @@
 
 ## 4. External Data
 
-- Create a DynamoDB table and experiment with loading and retrieving data manually, then do the same via a script on your local machine.
+- Create a RDS MySQL table and experiment with loading and retrieving data manually, then do the same via a script on local machine.
+    - RDS was created with two private subnets in the subnet group. Master username and password is created and needed to sign in.
+    - Security group was created to only have port 3306 inbound for traffic for MySQL. Public instance's Security Group also updated to allow incoming traffic to IP of RDS.
+    - Sign into RDS with from EC2 instance (web server) with the command 'mysql -h <RDS endpoint> -P 3306 -u <master username> -p' and then type in the password.
+    - Use 'CREATE DATABASE <db name>;', 'CREATE TABLE <table name> (<items included>);', and 'INSERT FROM <table name> VALUE("value from items included>);' to create your database tables.
+        - 'SELECT * FROM <table name>;', 'USE <database>;', and 'DESCRIBE <table name>;' were common commands used in MySQL CLI.
+    - Script was also created for this database (see fortune_script.sql)
 
 - Refactor your static page into your Fortune-of-the-Day website (Node, PHP, Python, whatever) which reads/updates a list of fortunes in the AWS DynamoDB table. (Hint: EC2 Instance Role)
 
