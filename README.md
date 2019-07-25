@@ -67,10 +67,12 @@
 - Create a RDS MySQL table and experiment with loading and retrieving data manually, then do the same via a script on local machine.
     - RDS was created with two private subnets in the subnet group. Master username and password is created and needed to sign in.
     - Security group was created to only have port 3306 inbound for traffic for MySQL. Public instance's Security Group also updated to allow incoming traffic to IP of RDS.
+        - Since RDS is in the private subnet and "Publicly Accessible" is "No," no internet access is available and cannot connect from local computer. Must be through the EC2 instance (or NAT) from public subnet.
     - Sign into RDS with from EC2 instance (web server) with the command 'mysql -h [RDS endpoint] -P 3306 -u [master username] -p' and then type in the password.
     - Use 'CREATE DATABASE [db name];', 'CREATE TABLE [table name] ([items included]);', and 'INSERT FROM [table name] VALUE([value from items included]);' to create your database tables.
         - 'SELECT * FROM [table name];', 'USE [database name];', and 'DESCRIBE [table name];' were common commands used in MySQL CLI.
-    - Script was also created for this database (see fortune_script.sql)
+    - Script was also created for this database (see fortune_script.sql). 'SOURCE [file destination];' when inside the database or 'mysql -h [RDS endpoint] -u [username] -p [database name] < [script.sql]' when outside of database
+    - 'SELECT [table_name]', 'FROM [information_schema.tables]', 'WHERE [table_schema = @schema]'; are all useful commands.
 
 - Refactor your static page into your Fortune-of-the-Day website (Node, PHP, Python, whatever) which reads/updates a list of fortunes in the AWS DynamoDB table. (Hint: EC2 Instance Role)
 
