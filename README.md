@@ -71,6 +71,10 @@
     - Sign into RDS with from EC2 instance (web server) with the command 'mysql -h [RDS endpoint] -P 3306 -u [master username] -p' and then type in the password.
     - Use 'CREATE DATABASE [db name];', 'CREATE TABLE [table name] ([items included]);', and 'INSERT FROM [table name] VALUE([value from items included]);' to create your database tables.
         - 'SELECT * FROM [table name];', 'USE [database name];', and 'DESCRIBE [table name];' were common commands used in MySQL CLI.
+        - In order to create user, type:
+            - CREATE USER '[user]'@'[% or localhost]' IDENTIFIED BY '[enter_password]';
+            - GRANT PRIVILEGES ON *.* TO '[user]'@'[% or localhost]' WITH GRANT OPTION;
+            - FLUSH PRIVILEGES;
     - Script was also created for this database (see fortune_script.sql). 'SOURCE [file destination];' when inside the database or 'mysql -h [RDS endpoint] -u [username] -p [database name] < [script.sql]' when outside of database
     - 'SELECT [table_name]', 'FROM [information_schema.tables]', 'WHERE [table_schema = @schema]'; are all useful commands.
 
