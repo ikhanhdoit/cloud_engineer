@@ -35,13 +35,7 @@
     
 - ** _Alterative to using Amazon Linux 2. I used Red Hat Enterprise Linux and used the following user data script upon start of the instance:_**
 
-    > #!/bin/bash\
-    sudo yum update -y\
-    sudo yum install -y httpd php php-mysqlnd\
-    sudo systemctl start httpd\
-    sudo chkconfig httpd on\
-    sudo yum install -y vim\
-    echo "Fortune-Of-The-Day Coming Soon!" > /var/www/html/index.html\
+    >see "user_data.sh" in the repository
 
 - Take a snapshot of your VM, delete the VM, and deploy a new one from the snapshot. Basically disk backup + disk restore.
     - Can create snapshot of EBS volume and AMI image of instance to create backup
