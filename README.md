@@ -79,7 +79,7 @@
             - CREATE USER '[user]'@'[% or localhost]' IDENTIFIED BY '[enter_password]';
             - GRANT PRIVILEGES ON *.* TO '[user]'@'[% or localhost]' WITH GRANT OPTION;
             - FLUSH PRIVILEGES;
-    - Script was also created for this database (see fortune_script.sql). 'SOURCE [file destination];' when inside the database or 'mysql -h [RDS endpoint] -u [username] -p [database name] < [script.sql]' when outside of database
+    - Script was also created for this database (see fortune_script.sql in the repository). 'SOURCE [file destination];' when inside the database or 'mysql -h [RDS endpoint] -u [username] -p [database name] < [script.sql]' when outside of database
     - 'SELECT [table_name]', 'FROM [information_schema.tables]', 'WHERE [table_schema = @schema]'; are all useful commands.
 
 - Refactor your static page into your Fortune-of-the-Day website (Node, PHP, Python, whatever) which reads/updates a list of fortunes in the AWS DynamoDB table. (Hint: EC2 Instance Role)
