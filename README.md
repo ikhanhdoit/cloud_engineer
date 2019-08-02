@@ -32,6 +32,16 @@
     - Used "sudo chkconfig httpd on" to make sure the web server starts at each system boot.
         - ** _"Forbidden. You don't have permission to access /index.html on this server." was shown. It was because /var/www/html/index.html file was not chmod 644 and it restricted public access. Change to 644 to correct._ **
     - ** NACL, Route Tables, and Security Groups can be configured to be more narrow to your infrastructure and IP Addresses instead of 0.0.0.0/0 and ALL ports. **
+    
+- ** _Alterative to using Amazon Linux 2. I used Red Hat Enterprise Linux and used the following user data script upon start of the instance:_**
+
+    > #!/bin/bash\
+    sudo yum update -y\
+    sudo yum install -y httpd php php-mysqlnd\
+    sudo systemctl start httpd\
+    sudo chkconfig httpd on\
+    sudo yum install -y vim\
+    echo "Fortune-Of-The-Day Coming Soon!" > /var/www/html/index.html\
 
 - Take a snapshot of your VM, delete the VM, and deploy a new one from the snapshot. Basically disk backup + disk restore.
     - Can create snapshot of EBS volume and AMI image of instance to create backup
