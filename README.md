@@ -94,11 +94,32 @@
     - 'SELECT [table_name]', 'FROM [information_schema.tables]', 'WHERE [table_schema = @schema]'; are all useful commands.
 
 - Refactor your static page into your Fortune-of-the-Day website (Node, PHP, Python, whatever) which reads/updates a list of fortunes in the AWS RDS table. (Hint: EC2 Instance Role)
+    - Created IAM Role to grant access for EC2 instance to RDS.
+    - Went to '/etc/httpd/conf/httpd.conf' to change "DirectoryIndex" to include index.php since the scripting language is PHP. If not then index.html would be the default.
+    - Created 'index.php' file in '/var/www/html/' folder where httpd would default to read the file.
+    - The file "index.php" with the database query script is on the github folder allowing the website to be dynamic.
 
 - Checkpoint: Your HA/AutoScaled website can now load/save data to a database between users and sessions
+    - Currently only able to query the database to display some text and randomize fortune for the website.
 
 - Issues:
-    - Had to learn SQL language and how databases work.
+    - Had to learn SQL language and how databases work. This took quite some time as I am not familiar with it.
     - Had to learn how webservers interact and query from databases, specially MySQL. Also how to connect with private subnet and not public facing.
     - SELinux didn't allow the webserver to query from the MySQL database. I had to change the SELinux default from "enforcing" to "permissive." This is only an RHEL issue.
     - PHP language was a struggle. I tried Python (since I'm more familiar with it) but not as easy with webservers like PHP unless I learn Flask or Django. Tried to keep it as simple as possible for now.
+        - Took a long time to get the PHP script to print out the query of the database. Needed to iterate the database and "print" to complete this task.
+        - Think things might be easier for people to use a language they are familiar with, even though PHP is very popular for websites.
+        
+## 5. Web Hosting Platform-as-a-Service
+
+- Retire that simple website and re-deploy it on .
+
+- Create a S3 Static Website Bucket, upload some sample static pages/files/images. Add those assets to your Elastic Beanstalk website.
+
+- Register a domain (or re-use and existing one). Set Route53 as the Nameservers and use Route53 for DNS. Make www.yourdomain.com go to your Elastic Beanstalk. Make static.yourdomain.com serve data from the S3 bucket.
+
+- Enable SSL for your Static S3 Website. This isn't exactly trivial. (Hint: CloudFront + ACM)
+
+- Enable SSL for your Elastic Beanstalk Website.
+
+- Checkpoint: Your HA/AutoScaled website now serves all data over HTTPS. The same as before, except you don't have to manage the servers, web server software, website deployment, or the load balancer.
