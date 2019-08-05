@@ -11,6 +11,9 @@
 - Configure the AWS CLI for your user. 
     - Used 'aws configure' in Linux terminal to set it up.
     - The AWS Access Key ID and AWS Secret Access Key is needed. It can be found on IAM user Security Credentials.
+    
+- Issues:
+    - New UI for CloudWatch Billing Alerts. Had to redo and add another email to SNS to receive alert email.
 
 ## 2. Web Hosting Basics:
 
@@ -48,6 +51,10 @@
 
 - Checkpoint: You can view a simple HTML page served from your EC2 instance. Elastic IP can be used as well.
 
+- Issues:
+    - Amazon Linux 2 has limited packages to install or not so easy to find packages. Went with Red Hat Enterprise Linux (RHEL) instances to simplify things and to be more industry standard.
+    - Have to be careful about AMI and EBS snapshots, as they are not exactly under the free tier so price may increase.
+
 ## 3. Auto Scaling
 
 - Put a Elastic Load Balancer infront of that VM and load balance between two Availability Zones (one EC2 in each AZ).
@@ -65,6 +72,10 @@
     - You can test your Auto Scaling Group by terminating the instance and see if another instance creates itself.
     - Be aware of EBS volumes if you didn't set it to delete on termination. This could rack up unncessary costs.
     - Auto Scaling Group may take some time before automatically creating a new instance due to health check timers.
+    
+- Issues:
+    - If there you do not delete EBS volumes upon termination, EBS volumes can build up when autoscaling and increase costs.
+    - Lots of changes with user-data information and Launch Configurations as new information and knowledge changes to initiate certain packages and software/configurations.
 
 ## 4. External Data
 
@@ -82,6 +93,12 @@
     - Script was also created for this database (see fortune_script.sql in the repository). 'SOURCE [file destination];' when inside the database or 'mysql -h [RDS endpoint] -u [username] -p [database name] < [script.sql]' when outside of database
     - 'SELECT [table_name]', 'FROM [information_schema.tables]', 'WHERE [table_schema = @schema]'; are all useful commands.
 
-- Refactor your static page into your Fortune-of-the-Day website (Node, PHP, Python, whatever) which reads/updates a list of fortunes in the AWS DynamoDB table. (Hint: EC2 Instance Role)
+- Refactor your static page into your Fortune-of-the-Day website (Node, PHP, Python, whatever) which reads/updates a list of fortunes in the AWS RDS table. (Hint: EC2 Instance Role)
 
 - Checkpoint: Your HA/AutoScaled website can now load/save data to a database between users and sessions
+
+- Issues:
+    - Had to learn SQL language and how databases work.
+    - Had to learn how webservers interact and query from databases, specially MySQL. Also how to connect with private subnet and not public facing.
+    - SELinux didn't allow the webserver to query from the MySQL database. I had to change the SELinux default from "enforcing" to "permissive." This is only an RHEL issue.
+    - PHP language was a struggle. I tried Python (since I'm more familiar with it) but not as easy with webservers like PHP unless I learn Flask or Django. Tried to keep it as simple as possible for now.
