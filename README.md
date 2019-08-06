@@ -109,6 +109,7 @@
     - PHP language was a struggle. I tried Python (since I'm more familiar with it) but not as easy with webservers like PHP unless I learn Flask or Django. Tried to keep it as simple as possible for now.
         - Took a long time to get the PHP script to print out the query of the database. Needed to iterate the database and "print" to complete this task.
         - Think things might be easier for people to use a language they are familiar with, even though PHP is very popular for websites.
+    - Because RDS creates snapshots, I removed the backup by changing the backup schedule to 0 days. Also removed storage autoscaling and monitoring to reduce costs at this time.
         
 ## 5. Web Hosting Platform-as-a-Service
 
