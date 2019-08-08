@@ -97,10 +97,10 @@
     - Created IAM Role to grant access for EC2 instance to RDS.
     - Went to '/etc/httpd/conf/httpd.conf' to change "DirectoryIndex" to include index.php since the scripting language is PHP. If not then index.html would be the default.
     - Created 'index.php' file in '/var/www/html/' folder where httpd would default to read the file.
-    - The file "index.php" with the database query script is on the github folder allowing the website to be dynamic.
+    - The file 'index.php' with the database query script is on the github folder allowing the website to be dynamic.
+    - PHP Script to query database (query.php) and to insert new fortunes into the database (insert.php) is saved in the repository.
 
 - Checkpoint: Your HA/AutoScaled website can now load/save data to a database between users and sessions
-    - Currently only able to query the database to display some text and randomize fortune for the website.
 
 - Issues:
     - Had to learn SQL language and how databases work. This took quite some time as I am not familiar with it.
@@ -109,13 +109,14 @@
     - PHP language was a struggle. I tried Python (since I'm more familiar with it) but not as easy with webservers like PHP unless I learn Flask or Django. Tried to keep it as simple as possible for now.
         - Took a long time to get the PHP script to print out the query of the database. Needed to iterate the database and "print" to complete this task.
         - Think things might be easier for people to use a language they are familiar with, even though PHP is very popular for websites.
+    - Originally was only able to query the database, but was then able to insert into the database with new fortunes on the website, which would then refresh itself to the original home page.
     - Because RDS creates snapshots, I removed the backup by changing the backup schedule to 0 days. Also removed storage autoscaling and monitoring to reduce costs at this time.
         
 ## 5. Web Hosting Platform-as-a-Service
 
-- Retire that simple website and re-deploy it on .
+- Retire that simple website and re-deploy it on Docker/Kubernetes
 
-- Create a S3 Static Website Bucket, upload some sample static pages/files/images. Add those assets to your Elastic Beanstalk website.
+- Create a S3 Static Website Bucket, upload some sample static pages/files/images. Add those assets to your website.
 
 - Register a domain (or re-use and existing one). Set Route53 as the Nameservers and use Route53 for DNS. Make www.yourdomain.com go to your Elastic Beanstalk. Make static.yourdomain.com serve data from the S3 bucket.
 
