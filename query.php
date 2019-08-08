@@ -1,7 +1,7 @@
 <?php
-$servername = "cloudengineerdb2.csy5s34kiuf7.us-east-1.rds.amazonaws.com";
-$username = "www";
-$password = "www";
+$servername = "[RDS Endpoint]";
+$username = "[username]";
+$password = "[password]";
 $dbname = "fortune";
 
 // Create connection
