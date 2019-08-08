@@ -16,7 +16,7 @@ INSERT INTO fortunes (id, fortune)
  (NULL, "No one becomes successful over night. Remember everything is one step at a time."),
  (NULL, "Today it's up to you to create the peacefulness you long for."),
  (NULL, "A friend asks only for your time not your money."),
- (NULL, "If you refuse to accept anything but the best, you very often get it."),"),
+ (NULL, "If you refuse to accept anything but the best, you very often get it."),
  (NULL, "A smile is your passport into the hearts of others."),
  (NULL, "A good way to keep healthy is to eat more Chinese food."),
  (NULL, "Your high-minded principles spell success."),
