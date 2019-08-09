@@ -88,7 +88,7 @@
         - 'SELECT * FROM [table name];', 'USE [database name];', and 'DESCRIBE [table name];' were common commands used in MySQL CLI.
         - In order to create user, type:
             - CREATE USER '[user]'@'[% or localhost]' IDENTIFIED BY '[enter_password]';
-            - GRANT PRIVILEGES ON *.* TO '[user]'@'[% or localhost]' WITH GRANT OPTION;
+            - GRANT PRIVILEGES ON \*.\* TO '[user]'@'[% or localhost]' WITH GRANT OPTION;
             - FLUSH PRIVILEGES;
     - fortune_script.sql script was also created for this database (see fortune_script.sql in the repository). 'SOURCE [file destination];' when inside the database or 'mysql -h [RDS endpoint] -u [username] -p [database name] < [script.sql]' when outside of database where you were before you connect to the database.
         - Assuming the script is not saved yet, you would need to 'sudo yum install wget' and then 'wget [script location]' before running the SQL script.
