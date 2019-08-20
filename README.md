@@ -113,17 +113,47 @@
         - Think things might be easier for people to use a language they are familiar with, even though PHP is very popular for websites.
     - Originally was only able to query the database, but was then able to insert into the database with new fortunes on the website, which would then refresh itself to the original home page.
     - Because RDS creates snapshots, I removed the backup by changing the backup schedule to 0 days. Also removed storage autoscaling and monitoring to reduce costs at this time.
-        
-## 5. Web Hosting Platform-as-a-Service
 
-- Retire that simple website and re-deploy it on Docker/Kubernetes
+## 5. Microservices
 
-- Create a S3 Static Website Bucket, upload some sample static pages/files/images. Add those assets to your website.
+- Retire that simple website and re-deploy it on Docker.
+    - Using all of the previous scripts, I was able to slightly adjust them to make it work with Docker.
+        - For example, user_data.sh was revamped into a Dockerfile for the web server. "index.php", "insert.php", "query.php" were all copied over to the Docker image with Dockerfile.
+    - First created the database (db) Dockerfile. Was able to save the fortune_script.sql by 'COPY fortune_script.sql /docker-entrypoint-initdb.d/' instead of having to input another command to run the MySQL script.
+        - By doing this, the script executes upon starting the container.
+        - Also created the MySQL credentials by using ENV to set the MySQL root password, user, and user password.
+            - Although the $username in "insert.php" and "query.php" is root. It did not work when using 'www' as the username.
+    - Then created the webserver (web) Dockerfile. Made sure all of the important files were overwritten or added with COPY. This includes the httpd.conf file to allow index.php.
+        - Also include "insert.php", "query.php", and "index.php". I included these in the '/var/www/html/' folder.
+        - Be sure to 'EXPOSE 3306' for the MySQL database in the Dockerfile.
+        - You also need to include 'CMD ["usr/sbin/httpd", "-DFOREGROUND"]' or else the container will stop.
+    - Next is to use 'docker build -t <image_tag> .' when in the same folder as the Dockerfile you want to use to create the Docker image.
+        - I used "db" as the tag name for my database and "web" as the tag name for the webserver.
+    - After the images are created, you can now use 'docker run -d --name <container_tag> <image_name>'.
+        - Trying to run 'docker run' with '-i' (interactive) or '-t' (TTY) instead of '-d' (detached) caused the container to hang. You can run 'docker exec -it <container_name> /bin/bash' afterwards to get into the container.
+    - Although you can connect the container together during 'docker run', I connected them on the same docker network after the containers were already running.
+        - Run 'docker network create <network_name>' to create a network name of your choice. A bridge driver will be default, which is what you want.
+        - You can now connect to two containers to the same network by using 'docker network connect <network_name> <container_ID_or_name>' for each of the two containers.
+    - You now need to find the docker IP address for the db to include in the "insert.php" and "query.php" where $servername is. Port number 3306 is optional.
+        - Use 'docker container inspect <container_ID_or_name>' for the "db" container to find the "IPAddress".
+    - To access the working page in a browser, use 'docker container inspect <container_ID_or_name>' for the "web" container to find the "IPAddress".
+        - You should now see the website just the same as the simple website.
+        - ** _Would need to use port forwarding in order to make it accessible to the internet._ **
 
-- Register a domain (or re-use and existing one). Set Route53 as the Nameservers and use Route53 for DNS. Make www.yourdomain.com go to your Elastic Beanstalk. Make static.yourdomain.com serve data from the S3 bucket.
+- Use Docker-compose to build the container stack.
 
-- Enable SSL for your Static S3 Website. This isn't exactly trivial. (Hint: CloudFront + ACM)
+- Manage and Deploy the same thing on Kubernetes.
 
-- Enable SSL for your Elastic Beanstalk Website.
+- Manage and Deploy the same thing on ECS.
 
-- Checkpoint: Your HA/AutoScaled website now serves all data over HTTPS. The same as before, except you don't have to manage the servers, web server software, website deployment, or the load balancer.
+- Refactor your website into ONLY providing an API. It should only have a POST/GET to update/retrieve that specific data from DynamoDB. Bonus: Make it a simple REST API. Get rid of www.yourdomain.com and serve this EB as api.yourdomain.com
+
+- Move most of the UI piece of your EB website into your Static S3 Website and use Javascript/whatever to retrieve the data from your api.yourdomain.com URL on page load. Send data to the EB URL to have it update the DynamoDB. Get rid of static.yourdomain.com and change your S3 bucket to serve from www.yourdomain.com.
+
+- Checkpoint: Your EB deployment is now only a structured way to retrieve data from your database. All of your UI and application logic is served from the S3 Bucket (via CloudFront). You can support many more users since you're no longer using expensive servers to serve your website's static data.
+
+- Issues:
+    - Having to figure out which database endpoint to use for index.php. Had to use the container IP address.
+    - Creating the Dockerfiles, especially when it comes to CMD and making sure the image is build correctly.
+    - Knowing when to use -d (detached) mode vs. -i (interactive) mode when using 'docker run' was crucial as some images did not run properly the correct mode was not used.
+    - A lot of research and being stuck on this section as it was tough to figure out the nuances of how to deploy your application with Docker commands and Dockerfile.
