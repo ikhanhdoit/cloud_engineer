@@ -140,9 +140,15 @@
         - You should now see the website just the same as the simple website.
         - ** _Would need to use port forwarding in order to make it accessible to the internet._ **
 
-- Use Docker-compose to build the container stack.
+- Use Docker-compose to run multi containers.
+    - See "docker-compose.yml" file to see how to maintain multiple Docker containers together.
+        - In this case, we do not need to make a docker-compose.yml file from scratch since we already have the Dockerfiles we previously created.
+    - Network is defaulted as connected together so 'docker network create <network_name>' was not needed.
+    - "build" in the docker-compose.yml file only needed the "context" (directory) of the Dockerfile and the "dockerfile" (name) of the Dockerfile.
+    - 'docker-compose up' was done to build images and start the containers.
 
 - Manage and Deploy the same thing on Kubernetes.
+    - This was done instead of Docker Swarm.
 
 - Manage and Deploy the same thing on ECS.
 
@@ -157,3 +163,4 @@
     - Creating the Dockerfiles, especially when it comes to CMD and making sure the image is build correctly.
     - Knowing when to use -d (detached) mode vs. -i (interactive) mode when using 'docker run' was crucial as some images did not run properly the correct mode was not used.
     - A lot of research and being stuck on this section as it was tough to figure out the nuances of how to deploy your application with Docker commands and Dockerfile.
+    - Currently unable to automatically input the MySQL $servername/IP Address from the "db" container to the \*.php scripts in the "web" container.
