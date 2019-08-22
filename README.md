@@ -164,3 +164,5 @@
     - Knowing when to use -d (detached) mode vs. -i (interactive) mode when using 'docker run' was crucial as some images did not run properly the correct mode was not used.
     - A lot of research and being stuck on this section as it was tough to figure out the nuances of how to deploy your application with Docker commands and Dockerfile.
     - Currently unable to automatically input the MySQL $servername/IP Address from the "db" container to the \*.php scripts in the "web" container.
+        - Static IP could possibly be used but not best practice for security reasons.
+    - Docker and containers aren't the best to use for databases as they are ephemeral.
