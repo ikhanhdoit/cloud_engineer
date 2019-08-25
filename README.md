@@ -166,3 +166,5 @@
     - Currently unable to automatically input the MySQL $servername/IP Address from the "db" container to the \*.php scripts in the "web" container.
         - Static IP could possibly be used but not best practice for security reasons.
     - Docker and containers aren't the best to use for databases as they are ephemeral.
+    - 'kubectl get <resource>' did not work when relogging into the cloud server as the public IP changes each time (Linux Academy Playground).
+        - Need to restart Docker by using 'systemctl restart docker' before it works again.
