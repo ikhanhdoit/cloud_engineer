@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: web-service
+spec:
+  type: NordPort
+  selector:
+    app: web
+  ports:
+    portocol: TCP
+    port: 80
+    targetPort: 80
