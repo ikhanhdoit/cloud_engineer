@@ -150,13 +150,7 @@
 - Manage and Deploy the same thing on Kubernetes.
     - This was done instead of Docker Swarm.
 
-- Manage and Deploy the same thing on ECS.
-
-- Refactor your website into ONLY providing an API. It should only have a POST/GET to update/retrieve that specific data from DynamoDB. Bonus: Make it a simple REST API. Get rid of www.yourdomain.com and serve this EB as api.yourdomain.com
-
-- Move most of the UI piece of your EB website into your Static S3 Website and use Javascript/whatever to retrieve the data from your api.yourdomain.com URL on page load. Send data to the EB URL to have it update the DynamoDB. Get rid of static.yourdomain.com and change your S3 bucket to serve from www.yourdomain.com.
-
-- Checkpoint: Your EB deployment is now only a structured way to retrieve data from your database. All of your UI and application logic is served from the S3 Bucket (via CloudFront). You can support many more users since you're no longer using expensive servers to serve your website's static data.
+- Manage and Deploy the same thing on ECS/EKS.
 
 - Issues:
     - Having to figure out which database endpoint to use for index.php. Had to use the container IP address.
@@ -168,3 +162,5 @@
     - Docker and containers aren't the best to use for databases as they are ephemeral.
     - 'kubectl get <resource>' did not work when relogging into the cloud server as the public IP changes each time (Linux Academy Playground).
         - Need to restart Docker by using 'systemctl restart docker' before it works again.
+    - Minikube and NodePort are not to be used in prod, only local and dev environments.
+    - Because containers are stateless and ephemeral, databases should not generally be used in this way. 
