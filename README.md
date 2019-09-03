@@ -150,6 +150,7 @@
 - Manage and Deploy the same thing on Kubernetes.
     - This was done instead of Docker Swarm.
     - Docker needs to be installed before installing kubectl and minikube.
+    - The Kubernetes official website documentation is an amazing source. Very detailed and interactive environments to learn and practice.
     - Minikube and 'sudo minikube start --vm-driver=none' was used as this is a dev environment.
         - The '--vm-driver=none' will run an insecure kubernetes apiserver as root that may leave the host vulnerable to attacks. This is okay for now since it is not prod.
     - In order to not keep putitng sudo for your commands, you can put 'sudo chown -R [username] .kube/ .minikube/'.
@@ -186,4 +187,4 @@
     - Because containers are stateless and ephemeral, databases should not generally be used in this way.
     - Had to learn Kubernetes, minikube, and how to create yaml files to deploy the deployments and services for the pods.
     - 'kubectl get pods', 'kubectl get deployments', 'kubectl get services', 'kubectl get nodes', 'minikube status', and 'kubectl describe [resource]' were all very important/basic commands.
-    - Minikube dashboard is not working at the moment.
+    - Minikube dashboard is not working at the moment. 
