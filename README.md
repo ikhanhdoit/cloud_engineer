@@ -149,15 +149,20 @@
 
 - Manage and Deploy the same thing on Kubernetes.
     - This was done instead of Docker Swarm.
-    - Docker needs to be installed before installing kubectl and minikube. 
+    - Docker needs to be installed before installing kubectl and minikube.
     - Minikube and 'sudo minikube start --vm-driver=none' was used as this is a dev environment.
         - The '--vm-driver=none' will run an insecure kubernetes apiserver as root that may leave the host vulnerable to attacks. This is okay for now since it is not prod.
     - In order to not keep putitng sudo for your commands, you can put 'sudo chown -R [username] .kube/ .minikube/'.
     - Using the repository, you can then deploy the containers with 'kubectl create -f web-deployment.yaml' and 'kubectl create -f db-deployment.yaml'.
+        - These yaml files are in the GitHub Repository and they reference docker images in the Docker Hub repository.
         - This will build and run the db and web containers with replicas and port numbers.
     - In order to allow the outside internet to access the web container,  you can use 'kubectl create -f web-service.yaml' to create the service with NodePort enabled.
     - I then exposed the database to be reachable within the cluster and has an endpoint for the two replica db-deployment. Use 'kubectl expose deployment db --type=ClusterIP --name=[db service name]'.
         - The previous step with the yaml file could be done to make a service or you can expose the pod after the deployment is created.
+        - There are 3 options for the '--type=[type of traffic to your cluster]'.
+            - ClusterIP = Exposes pod to other pods within the cluster.
+            - NodePort = Exposes pod to outside of the cluster through a NAT.
+            - LoadBalancer = Creates an external load balancer that will forward traffic to your service.
     - Find out the database endpoint by using 'kubectl get service' and input this into each of the web pods with 'kubectl get pods'.
         - Unfortunately I had to go into each replica container and put in the database endpoint into the "query.php" and "insert.php" files like we did in the previous ways instead of automatically being filled in.
             - Currently unsure how to do this but feels like there is a way to do this through kubernetes.
@@ -181,3 +186,4 @@
     - Because containers are stateless and ephemeral, databases should not generally be used in this way.
     - Had to learn Kubernetes, minikube, and how to create yaml files to deploy the deployments and services for the pods.
     - 'kubectl get pods', 'kubectl get deployments', 'kubectl get services', 'kubectl get nodes', 'minikube status', and 'kubectl describe [resource]' were all very important/basic commands.
+    - Minikube dashboard is not working at the moment.
