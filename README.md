@@ -149,8 +149,23 @@
 
 - Manage and Deploy the same thing on Kubernetes.
     - This was done instead of Docker Swarm.
-
-- Manage and Deploy the same thing on ECS/EKS.
+    - Docker needs to be installed before installing kubectl and minikube. 
+    - Minikube and 'sudo minikube start --vm-driver=none' was used as this is a dev environment.
+        - The '--vm-driver=none' will run an insecure kubernetes apiserver as root that may leave the host vulnerable to attacks. This is okay for now since it is not prod.
+    - In order to not keep putitng sudo for your commands, you can put 'sudo chown -R [username] .kube/ .minikube/'.
+    - Using the repository, you can then deploy the containers with 'kubectl create -f web-deployment.yaml' and 'kubectl create -f db-deployment.yaml'.
+        - This will build and run the db and web containers with replicas and port numbers.
+    - In order to allow the outside internet to access the web container,  you can use 'kubectl create -f web-service.yaml' to create the service with NodePort enabled.
+    - I then exposed the database to be reachable within the cluster and has an endpoint for the two replica db-deployment. Use 'kubectl expose deployment db --type=ClusterIP --name=[db service name]'.
+        - The previous step with the yaml file could be done to make a service or you can expose the pod after the deployment is created.
+    - Find out the database endpoint by using 'kubectl get service' and input this into each of the web pods with 'kubectl get pods'.
+        - Unfortunately I had to go into each replica container and put in the database endpoint into the "query.php" and "insert.php" files like we did in the previous ways instead of automatically being filled in.
+            - Currently unsure how to do this but feels like there is a way to do this through kubernetes.
+        - You enter the container by either the previous way of 'docker exec -it [docker container id] /bin/bash' or through kubernetes with 'kubectl exec -it [pod name] /bin/bash'.
+    - Unfortunately using minikube and limits yourself for only local dev environments and to play around with, not really for prod.
+        - This shows since the default is not exposed to the internet and limited to a single node Kubernetes cluster.
+        
+- Manage and Deploy the same thing on AWS ECS/EKS.
 
 - Issues:
     - Having to figure out which database endpoint to use for index.php. Had to use the container IP address.
@@ -163,4 +178,4 @@
     - 'kubectl get <resource>' did not work when relogging into the cloud server as the public IP changes each time (Linux Academy Playground).
         - Need to restart Docker by using 'systemctl restart docker' before it works again.
     - Minikube and NodePort are not to be used in prod, only local and dev environments.
-    - Because containers are stateless and ephemeral, databases should not generally be used in this way. 
+    - Because containers are stateless and ephemeral, databases should not generally be used in this way.
