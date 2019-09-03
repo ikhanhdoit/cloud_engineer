@@ -179,3 +179,5 @@
         - Need to restart Docker by using 'systemctl restart docker' before it works again.
     - Minikube and NodePort are not to be used in prod, only local and dev environments.
     - Because containers are stateless and ephemeral, databases should not generally be used in this way.
+    - Had to learn Kubernetes, minikube, and how to create yaml files to deploy the deployments and services for the pods.
+    - 'kubectl get pods', 'kubectl get deployments', 'kubectl get services', 'kubectl get nodes', 'minikube status', and 'kubectl describe [resource]' were all very important/basic commands.
