@@ -188,3 +188,35 @@
     - Had to learn Kubernetes, minikube, and how to create yaml files to deploy the deployments and services for the pods.
     - 'kubectl get pods', 'kubectl get deployments', 'kubectl get services', 'kubectl get nodes', 'minikube status', and 'kubectl describe [resource]' were all very important/basic commands.
     - Minikube dashboard is not working at the moment. 
+    
+## 6. Serverless
+
+- Write a AWS Lambda function to email you a list of all of the Fortunes in the DynamoDB table every night. Implement Least Privilege security for the Lambda Role. (Hint: Lambda using Python 3, Boto3, Amazon SES, scheduled with CloudWatch)
+
+- Refactor the above app into a Serverless app. This is where it get's a little more abstract and you'll have to do a lot of research, experimentation on your own.
+
+- The architecture: Static S3 Website Front-End calls API Gateway which executes a Lambda Function which reads/updates data in the DyanmoDB table.
+
+- Use your SSL enabled bucket as the primary domain landing page with static content.
+
+- Create an AWS API Gateway, use it to forward HTTP requests to an AWS Lambda function that queries the same data from DynamoDB as your EB Microservice.
+
+- Your S3 static content should make Javascript calls to the API Gateway and then update the page with the retrieved data.
+
+- Once you have the "Get Fortune" API Gateway + Lambda working, do the "New Fortune" API.
+
+- Checkpoint: Your API Gateway and S3 Bucket are fronted by CloudFront with SSL. You have no EC2 instances deployed. All work is done by AWS services and billed as consumed.
+
+## 7. Automation
+
+- These technologies are the most powerful when they're automated. You can make a Development environment in minutes and experiment and throw it away without a thought. This stuff isn't easy, but it's where the really skilled people excel.
+
+- Automate the deployment of the architectures above. Use whatever tool you want. The popular ones are AWS CloudFormation or Teraform. Store your code in AWS CodeCommit or on GitHub. Yes, you can automate the deployment of ALL of the above with native AWS tools.
+
+- I suggest when you get each app-related section of the done by hand you go back and automate the provisioning of the infrastructure. For example, automate the provisioning of your EC2 instance. Automate the creation of your S3 Bucket with Static Website Hosting enabled, etc. This is not easy, but it is very rewarding when you see it work.
+
+## 8. Continuous Delivery
+
+- As you become more familiar with Automating deployments you should explore and implement a Continuous Delivery pipeline.
+
+- Develop a CI/CD pipeline to automatically update a dev deployment of your infrastructure when new code is published, and then build a workflow to update the production version if approved. Travis CI is a decent SaaS tool, Jenkins has a huge following too, if you want to stick with AWS-specific technologies you'll be looking at CodePipeline.
