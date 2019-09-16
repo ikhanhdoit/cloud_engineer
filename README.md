@@ -101,6 +101,8 @@
     - Created 'index.php' file in '/var/www/html/' folder where httpd would default to read the file.
     - The file 'index.php' with the database query script is on the github folder allowing the website to be dynamic.
     - PHP Script to query database (query.php) and to insert new fortunes into the database (insert.php) is saved in the repository.
+    - You need to change SELinux for RHEL distro from "enforcing" to "permissive". Edit the '/etc/selinux/config' file and change "SELINUX=enforcing" to "SELINUX=permissive".
+        - Then reboot the system with 'sudo reboot' and in a minute or two your website can now query the database.
 
 - Checkpoint: Your HA/AutoScaled website can now load/save data to a database between users and sessions
 
