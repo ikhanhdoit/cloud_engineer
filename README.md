@@ -174,6 +174,15 @@
         - This shows since the default is not exposed to the internet and limited to a single node Kubernetes cluster.
         
 - Manage and Deploy the same thing on AWS ECS/EKS.
+    - Choose ECS in AWS and choose "Create Cluster" instead of "Get Started" to avoid using Fargate.
+        - Nothing wrong with Fargate and it's easier to use for ECS but we will do it the long and hard way to understand what's happening.
+        - Select "ECS Linux + Networking" and then Next.
+        - Choose the Cluster name and for this project, I've chosen "t2.micro" for ECS instance type for lower cost (or free) and low resources needed.
+        - Select "Amazon Linux 1 AMI" for the EC2 AMI ID. This was chosen due to the restrictions on Amazon Linux 2 AMI with the yum packages.
+        - Select the Key Pair you want along with the VPC and Public Subnets you want. Also choose the Security group for this instance.
+        - ecsInstanceRole for the container IAM role should already be defaulted to this field. This allows the instance to have ECS agent communicate to other AWS services.
+        - Click "Create Cluster" and it will create the cluster through CloudFormation. You can view the steps in CloudFormation for the ASG, Launch Config, etc.
+    - 
 
 - Issues:
     - Having to figure out which database endpoint to use for index.php. Had to use the container IP address.
