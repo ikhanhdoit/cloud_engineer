@@ -182,7 +182,18 @@
         - Select the Key Pair you want along with the VPC and Public Subnets you want. Also choose the Security group for this instance.
         - ecsInstanceRole for the container IAM role should already be defaulted to this field. This allows the instance to have ECS agent communicate to other AWS services.
         - Click "Create Cluster" and it will create the cluster through CloudFormation. You can view the steps in CloudFormation for the ASG, Launch Config, etc.
-    - 
+    - Next we will create new Task Definitions and choose EC2.
+        - Select the Task Definition Name
+        - Click add container and choose a container name. Also fill in the container image location (in my case, dockerhub).
+            - I then created a soft limit of 300MiB for Memory Limits and on port 80 for both host and container port.
+            - CPU units under Environment, I chose 200 and clicked on Essential. Also enabled Log configuration with CloudWatch Logs and then click "Add".
+        - Click "Create" to complete the Task Definition.
+    - Now we choose "Run Task" under "Actions" Tab to run the task.
+        - Select EC2 for Launch type and then click "Run Task"
+    - Now that the instance is running, you can ssh into it with the key pair and 'ssh -i <key_pair> ec2-user@<public_ip of instance>'.
+        - Now that you are in the instance, you want to go into the docker container by 'docker exec -it <container_id> /bin/bash'.
+        - Just like before, update the "insert.php" and "query.php" file with the RDS endpoint, username, and password with vim.
+    - You can now go into Route 53 and update the public IP to your website name if desired.
 
 - Issues:
     - Having to figure out which database endpoint to use for index.php. Had to use the container IP address.
