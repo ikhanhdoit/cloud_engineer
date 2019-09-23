@@ -173,7 +173,7 @@
     - Unfortunately using minikube and limits yourself for only local dev environments and to play around with, not really for prod.
         - This shows since the default is not exposed to the internet and limited to a single node Kubernetes cluster.
         
-- Manage and Deploy the same thing on AWS ECS/EKS.
+- Manage and Deploy the same thing on AWS ECS.
     - Choose ECS in AWS and choose "Create Cluster" instead of "Get Started" to avoid using Fargate.
         - Nothing wrong with Fargate and it's easier to use for ECS but we will do it the long and hard way to understand what's happening.
         - Select "ECS Linux + Networking" and then Next.
@@ -194,6 +194,7 @@
         - Now that you are in the instance, you want to go into the docker container by 'docker exec -it <container_id> /bin/bash'.
         - Just like before, update the "insert.php" and "query.php" file with the RDS endpoint, username, and password with vim.
     - You can now go into Route 53 and update the public IP to your website name if desired.
+- EKS was not used as the pricing for it is too much for this project. It is currently $144/month for each EKS cluster.
 
 - Issues:
     - Having to figure out which database endpoint to use for index.php. Had to use the container IP address.
