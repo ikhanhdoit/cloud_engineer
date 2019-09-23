@@ -193,7 +193,15 @@
     - Now that the instance is running, you can ssh into it with the key pair and 'ssh -i <key_pair> ec2-user@<public_ip of instance>'.
         - Now that you are in the instance, you want to go into the docker container by 'docker exec -it <container_id> /bin/bash'.
         - Just like before, update the "insert.php" and "query.php" file with the RDS endpoint, username, and password with vim.
-    - You can now go into Route 53 and update the public IP to your website name if desired.
+- You can also create a container Service for autoscaling or load balancing.
+    - Under the Service tab, click "Create".
+        - Select EC2 for the Launch Type and choose your Task Definition and correct cluster.
+        - Choose a Service name and the number of tasks you want to have for your Service. Adjust your Minimum health percent as needed and click "next step".
+        - Choose a load balancer if needed (usually Application Load Balancer) and then select "next step".
+        - If you wish to had auto scaling, select "Configure Service Auto Scaling..." and choose the minimum number of tasks, desired tasks, and maxium number of tasks.
+            - Select the Scaling policy type of either Target tracking or Step scaling. Select policy name and choose your metrics similar to EC2 Autoscaling and CloudWatch.
+        - Select "next step" and "Create Service" if everything looks good.
+    - You can now go into Route 53 and update the public IP to your website name if desired. After a few minutes, your website should work now.
 - EKS was not used as the pricing for it is too much for this project. It is currently $144/month for each EKS cluster.
 
 - Issues:
