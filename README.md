@@ -222,7 +222,10 @@
     
 ## 6. Serverless
 
-- Write a AWS Lambda function to email you a list of all of the Fortunes in the DynamoDB table every night. Implement Least Privilege security for the Lambda Role. (Hint: Lambda using Python 3, Boto3, Amazon SES, scheduled with CloudWatch)
+- Write a AWS Lambda function to email you a list of all of the Fortunes in the RDS table every night. Implement Least Privilege security for the Lambda Role. (Hint: Lambda using Python 3, Boto3, Amazon SES, scheduled with CloudWatch)
+    - Select Lambda in AWS console and create a new function.
+        - Choose a function name and use the Python 3.6 Runtime. For the Execution role, select to create a new role with basic Lambda permissions and create function.
+    - 
 
 - Refactor the above app into a Serverless app. This is where it get's a little more abstract and you'll have to do a lot of research, experimentation on your own.
 
