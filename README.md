@@ -222,10 +222,17 @@
     
 ## 6. Serverless
 
-- Write a AWS Lambda function to email you a list of all of the Fortunes in the RDS table every night. Implement Least Privilege security for the Lambda Role. (Hint: Lambda using Python 3, Boto3, Amazon SES, scheduled with CloudWatch)
+- Write a AWS Lambda function to email you a list of all of the Fortunes in the RDS table every night. Implement Least Privilege security for the Lambda Role. (Hint: Lambda using Python 3, Boto3, Amazon SNS, scheduled with CloudWatch)
     - Select Lambda in AWS console and create a new function.
         - Choose a function name and use the Python 3.7 Runtime. For the Execution role, select to create a new role with basic Lambda permissions and create function.
-    - 
+        - Upload the "pymysql.zip" file for the packages needed and upload or copy/paste the "sns_email.py" code for the function.
+        - Be sure to update all of the variables in the environment field in the lambda function. This makes the code more versatile and not hard coded.
+        - Adjusted your role in IAM to add the policies needed to make this function work, including VPC, SNS, RDS, CloudWatch, etc.
+        - Use your VPC for this project and the select the private subnets (since that is where your RDS is) and select the correct security group.
+            - Be sure to also have a NAT Gateway in your VPC since the Lambda function is in a private subnet and needs to connect to the internet.
+    - Go into CloudWatch and create a new Rule.
+        - Select "Schedule" and a Fixed rate of "24 Hours." Then Add target to your Lambda function we just created.
+        - Select a name and create the rule. Your CloudWatch will automatically trigger your Lambda Function everyday now.
 
 - Refactor the above app into a Serverless app. This is where it get's a little more abstract and you'll have to do a lot of research, experimentation on your own.
 
@@ -240,6 +247,12 @@
 - Once you have the "Get Fortune" API Gateway + Lambda working, do the "New Fortune" API.
 
 - Checkpoint: Your API Gateway and S3 Bucket are fronted by CloudFront with SSL. You have no EC2 instances deployed. All work is done by AWS services and billed as consumed.
+
+- Issues:
+    - The Lambda Python code took quite awhile to figure out but eventually worked.
+        - The first issue was not configuring the VPC correctly. The Lambda Subnets were in the public subnet when it should be in the private subnet.
+        - The next issue was the IAM policies not having the correct permissions.
+        - Another issue was the code itself. Being more fluent in Python would've been helpful at this point. 
 
 ## 7. Automation
 
