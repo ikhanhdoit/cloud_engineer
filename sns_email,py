@@ -1,0 +1,23 @@
+import pymysql
+import os
+import boto3
+
+# Connect to the RDS instance
+conn = pymysql.connect(host=os.environ['db_host'], port=int(os.environ['db_port']), user=os.environ['db_user'], passwd=os.environ['db_password'], db=os.environ['db_name'],connect_timeout=3)
+
+def rds_query():
+    with conn.cursor() as cur:
+        select_statement = "select * from `{}`;".format( os.environ['table_name'] )
+        cur.execute(select_statement)
+        result = cur.fetchall()
+    return result
+    
+rds_complete = rds_query()
+sns = boto3.client('sns')
+
+def lambda_handler(event,context):
+    
+    response=sns.publish(
+        TopicArn=os.environ['topic_arn'],
+        Message='Updated Database: ' + str(rds_complete),
+    )
