@@ -223,6 +223,10 @@
 ## 6. Serverless
 
 - Write a AWS Lambda function to email you a list of all of the Fortunes in the RDS table every night. Implement Least Privilege security for the Lambda Role. (Hint: Lambda using Python 3, Boto3, Amazon SNS, scheduled with CloudWatch)
+    - Go into Simple Notification Service (SNS) to create a Topic.
+        - Click "Create Topic" and choose a name for it.
+        - Now Click "Create Subscription" and change the protocol to "Email" and create the subscription.
+            - This should prompt an email for you to confirm the subscription.
     - Select Lambda in AWS console and create a new function.
         - Choose a function name and use the Python 3.7 Runtime. For the Execution role, select to create a new role with basic Lambda permissions and create function.
         - Upload the "pymysql.zip" file for the packages needed and upload or copy/paste the "sns_email.py" code for the function.
