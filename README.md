@@ -170,6 +170,8 @@
         - Unfortunately I had to go into each replica container and put in the database endpoint into the "query.php" and "insert.php" files like we did in the previous ways instead of automatically being filled in.
             - Currently unsure how to do this but feels like there is a way to do this through kubernetes.
         - You enter the container by either the previous way of 'docker exec -it [docker container id] /bin/bash' or through kubernetes with 'kubectl exec -it [pod name] /bin/bash'.
+
+      
     - Unfortunately using minikube and limits yourself for only local dev environments and to play around with, not really for prod.
         - This shows since the default is not exposed to the internet and limited to a single node Kubernetes cluster.
         
