@@ -172,7 +172,7 @@
         - You enter the container by either the previous way of 'docker exec -it [docker container id] /bin/bash' or through kubernetes with 'kubectl exec -it [pod name] /bin/bash'.
 
 
-      
+## RESUME HERE
     - Unfortunately using minikube and limits yourself for only local dev environments and to play around with, not really for prod.
         - This shows since the default is not exposed to the internet and limited to a single node Kubernetes cluster.
         
