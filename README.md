@@ -11,7 +11,7 @@
 - Configure the AWS CLI for your user. 
     - Used 'aws configure' in Linux terminal to set it up.
     - The AWS Access Key ID and AWS Secret Access Key is needed. It can be found on IAM user Security Credentials.
-    
+
 - Issues:
     - New UI for CloudWatch Billing Alerts. Had to redo and add another email to SNS to receive alert email.
 
@@ -172,6 +172,7 @@
         - You enter the container by either the previous way of 'docker exec -it [docker container id] /bin/bash' or through kubernetes with 'kubectl exec -it [pod name] /bin/bash'.
 
 
+
 ## RESUME HERE
     - Unfortunately using minikube and limits yourself for only local dev environments and to play around with, not really for prod.
         - This shows since the default is not exposed to the internet and limited to a single node Kubernetes cluster.
@@ -222,7 +223,7 @@
     - Had to learn Kubernetes, minikube, and how to create yaml files to deploy the deployments and services for the pods.
     - 'kubectl get pods', 'kubectl get deployments', 'kubectl get services', 'kubectl get nodes', 'minikube status', and 'kubectl describe [resource]' were all very important/basic commands.
     - Minikube dashboard is not working at the moment. 
-    
+
 ## 6. Serverless
 
 - Write a AWS Lambda function to email you a list of all of the Fortunes in the RDS table every night. Implement Least Privilege security for the Lambda Role. (Hint: Lambda using Python 3, Boto3, Amazon SNS, scheduled with CloudWatch)
