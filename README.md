@@ -171,7 +171,7 @@
             - Currently unsure how to do this but feels like there is a way to do this through kubernetes.
         - You enter the container by either the previous way of 'docker exec -it [docker container id] /bin/bash' or through kubernetes with 'kubectl exec -it [pod name] /bin/bash'.
 
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 
 ## RESUME HERE
